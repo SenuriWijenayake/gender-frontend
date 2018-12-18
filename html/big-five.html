@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Questionnaire</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript" src="../js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/styles.css">
+</head>
+
+<body>
+
+	<div ng-app="app" ng-controller="BigFiveController">
+		<div class="container">
+			<div class="row" style="text-align:center;">
+				<h3>You have successfully completed our quiz!</h3>
+				<br />
+				<p>Given below are a number of characteristics that may or may not apply to you.
+					Indiciate to what extent you agree or disagree with each statement.
+					<p>Select a value for ALL the statements.
+			</div>
+			<br />
+			<div class="question-container">
+				<form action="http://localhost:8080/bigFiveData" method="post">
+					<input type="hidden" name="userId" id="userId">
+					<table>
+						<tr>
+							<th class="statement left">I see Myself as Someone Who...</th>
+							<th class="size-adjust center">Disagree strongly</th>
+							<th class="size-adjust center">Disagree a little</th>
+							<th class="size-adjust center">Neither agree nor disagree</th>
+							<th class="size-adjust center">Agree a little</th>
+							<th class="size-adjust center">Agree strongly</th>
+						</tr>
+						<tr ng-repeat="q in questions" ng-class-even="'shaded-tr'">
+							<td>{{q.id}}. {{q.question}}</td>
+							<td><input type="radio" value="1" name="{{q.id}}" class="align-td" required></td>
+							<td><input type="radio" value="2" name="{{q.id}}" class="align-td"></td>
+							<td><input type="radio" value="3" name="{{q.id}}" class="align-td"></td>
+							<td><input type="radio" value="4" name="{{q.id}}" class="align-td"></td>
+							<td><input type="radio" value="5" name="{{q.id}}" class="align-td"></td>
+						</tr>
+					</table>
+					<br />
+					<br />
+					<div class="row">
+						<div class="col-sm-12">
+							<input class="submit" type="submit" value="Submit Answers">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

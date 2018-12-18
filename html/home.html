@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Welcome!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script type="text/javascript" src="../js/app.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+</head>
+
+<body>
+
+  <div ng-app="app" ng-controller="HomeController">
+    <div class="container">
+      <div class="row" style="text-align:center;">
+        <div>
+          Welcome to Quiz Master! Thank you for agreeing to participate in this study. <br>
+          To get started, enter your details in the form given below. <br>
+          All fields are required (marked in <span style="color:red;">*</span>).
+          <br>
+        </div>
+
+        <div class="question-container">
+          <form>
+            <table style="width:100%;">
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Gender: <span style="color:red;">*</span> </td>
+                <td class="col-sm-6 padding-adjust-radio">
+                  <input type="radio" name="user.gender" ng-model="user.gender" value="female" class="radio-button" required> <label class="gender-label"> Female </label>
+                </td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6">
+                  <input type="radio" name="user.gender" ng-model="user.gender" value="male" class="radio-button"> <label class="gender-label"> Male </label>
+                </td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6">
+                  <input type="radio" name="user.gender" ng-model="user.gender" value="not-specified" class="radio-button"> <label class="gender-label"> Prefer not to say </label>
+                </td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6">
+                  <input type="radio" id="gender-specified" name="user.gender" ng-model="user.gender" value="specified" class="radio-button"> <label class="specify-label"> Prefer to specify: </label>
+                  <input type="text" id="gender-text" ng-model="user.genderSpecified" class="specify-text" ng-required="user.gender == specified ? true : false">
+                </td>
+              </tr>
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Age: <span style="color:red;">*</span></td>
+                <td class="col-sm-6 padding-adjust-radio"> <input type="radio" name="user.age" ng-model="user.age" value="1" class="radio-button" required> <label class="gender-label"> 18 - 24 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.age" ng-model="user.age" value="2" class="radio-button"> <label class="gender-label"> 25 - 34 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.age" ng-model="user.age" value="3" class="radio-button"> <label class="gender-label"> 35 - 44 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.age" ng-model="user.age" value="4" class="radio-button"> <label class="gender-label"> 45 - 54 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.age" ng-model="user.age" value="5" class="radio-button"> <label class="gender-label"> 55 - 64 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.age" ng-model="user.age" value="6" class="radio-button"> <label class="gender-label"> 65 or older </label></td>
+              </tr>
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Level of Education: <span style="color:red;">*</span> </td>
+                <td class="col-sm-6 padding-adjust-radio"> <input type="radio" name="user.education" ng-model="user.education" value="bsc" class="radio-button" required> <label class="gender-label"> Undergraduate student </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.education" ng-model="user.education" value="msc" class="radio-button"> <label class="gender-label"> Master's student </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.education" ng-model="user.education" value="phd" class="radio-button"> <label class="gender-label"> Doctoral student </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.education" ng-model="user.education" value="higher" class="radio-button"> <label class="gender-label"> Higher </label></td>
+              </tr>
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Field of Study: <span style="color:red;">*</span></td>
+                <td class="col-sm-6" style="padding-top: 10px;"> <input type="text" placeholder=" e.g. Computer Science" ng-model="user.field" class="input-text" required></td>
+              </tr>
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Question Set: <span style="color:red;">*</span> </td>
+                <td class="col-sm-6 padding-adjust-radio"> <input type="radio" name="user.questionSet" ng-model="user.questionSet" value="1" class="radio-button" required> <label class="gender-label"> Set 1 </label></td>
+              </tr>
+              <tr class="row">
+                <td class="col-sm-6 right"></td>
+                <td class="col-sm-6"> <input type="radio" name="user.questionSet" ng-model="user.questionSet" value="2" class="radio-button"> <label class="gender-label"> Set 2 </label></td>
+              </tr>
+
+            </table>
+            <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <button class="submit-details" ng-click="submitDetails(user)">Let's get started!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+</body>
+
+</html>

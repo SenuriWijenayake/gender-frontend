@@ -401,8 +401,14 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.update = function() {
-    console.log("Inside update");
+
     if ($scope.sliderChanged) {
+
+      //Remove the question area and chart area
+      $("#question-area").css("display", "none");
+      $("#chart-area").css("display", "none");
+      $("#change-section").css("display", "none");
+
       //Disable the button
       $("#submit-button").attr("disabled", "disabled");
       $("#confidence-container").css("display", "none");
@@ -426,6 +432,11 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.next = function() {
+    //Remove the question area and chart area
+    $("#question-area").css("display", "none");
+    $("#chart-area").css("display", "none");
+    $("#change-section").css("display", "none");
+
     $scope.count = 0;
 
     //Make the input enabled and submit invisible
@@ -453,6 +464,11 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         data: data,
         type: JSON,
       }).then(function(response) {
+
+        //Display the new question area and chart area
+        $("#question-area").css("display", "block");
+        $("#chart-area").css("display", "block");
+        $("#change-section").css("display", "block");
 
         $scope.myAnswer = {};
         $scope.sliderChanged = false;

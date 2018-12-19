@@ -477,6 +477,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
         if ($scope.question.questionNumber == 0) {
           $("#question-area").css("display", "none");
+          $scope.userState = "trained";
           $scope.history.push({
             name: "QuizBot",
             msg: "The training is complete! You may now attempt the quiz. The quiz contains 34 objective and subjective MCQs. To start the quiz type 'GO'. Do NOT refresh the page or go back during the quiz."
@@ -527,7 +528,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   //Chatbot function to start the quiz
-  $scope.userState = "ready"; //Ready to start
+  $scope.userState = "ready";// Setting the inital stage
 
   //Function to adjust scrolling - not working
   $scope.scrollAdjust = function() {
@@ -606,17 +607,19 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     var word = handle.split(" ")[1];
     var words = $scope.question.words;
 
-    //For each should be removed.
-    for (var i = 0; i < words.length; i++) {
-      if (word == undefined) {
+    //Check if a word was entered
+    if (word == undefined) {
+      $scope.history.push({
+        name: "QuizBot",
+        msg: "I am sorry. Seems like you did not enter a word. Type 'EXPLAIN' and the word to find the meaning. e.g. EXPLAIN " + words[0].key
+      });
+    } else {
+      //Check if the word is available in the given list
+      var index = $scope.isKeyAvailable(word.toLowerCase(), words);
+      if (index != -1) {
         $scope.history.push({
           name: "QuizBot",
-          msg: "I am sorry. Seems like you did not enter a word. Type 'EXPLAIN' and the word to find the meaning. e.g. EXPLAIN " + words[0].key
-        });
-      } else if (word.toLowerCase() == words[i].key) {
-        $scope.history.push({
-          name: "QuizBot",
-          msg: words[i].key + " => " + words[i].explaination
+          msg: words[index].key + " => " + words[index].explaination
         });
 
         //If in training
@@ -629,8 +632,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
             $scope.scrollAdjust();
           }, 500);
         }
-        break;
-        
       } else {
         $scope.history.push({
           name: "QuizBot",
@@ -639,7 +640,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $scope.help(words);
       }
     }
-
     $scope.message = "";
   };
 
@@ -719,6 +719,15 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $scope.error(handle);
       }
     }
+  };
+
+  $scope.isKeyAvailable = function(key, obj) {
+    for (var i = 0; i < obj.length; i++) {
+      if (key == obj[i].key) {
+        return i;
+      }
+    }
+    return -1;
   };
 
 });

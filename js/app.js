@@ -605,6 +605,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     //Get the word
     var word = handle.split(" ")[1];
     var words = $scope.question.words;
+
+    //For each should be removed.
     for (var i = 0; i < words.length; i++) {
       if (word == undefined) {
         $scope.history.push({
@@ -627,7 +629,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
             $scope.scrollAdjust();
           }, 500);
         }
-
+        break;
+        
       } else {
         $scope.history.push({
           name: "QuizBot",

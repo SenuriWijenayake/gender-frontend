@@ -22,9 +22,9 @@
     <div class="row">
       <div class="col-sm-6" id="question-area" style="display:none;">
         <form class="form-styles">
-          <div style="text-align:center;padding:15px;">
+          <div id="qBox" style="text-align: center; padding:15px;">
             <div class="row">
-              <p class="question-text"> Q{{question.questionNumber + 1}}. {{question.questionText}}</p>
+              <p class="question-text"> <span ng-if="question.questionNumber > 0"> Q{{question.questionNumber + 1}}. </span>{{question.questionText}}</p>
               <div id="image-container" style="margin-bottom: 15px;">
                 <img ng-if='question.img' src="{{question.img}}" style="width:237px; height:125px;">
               </div>

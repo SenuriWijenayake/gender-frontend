@@ -55,19 +55,34 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   //Chatbot related variables
   $scope.history = [{
+    name: "QuizBot",
+    msg: "Hi, I am QuizBot and welcome to our quiz program! :) "
+  }];
+
+  $timeout(function() {
+    $scope.history.push({
       name: "QuizBot",
-      msg: "Hi! I am the QuizBot! I can help you answer the questions in this quiz."
-    },
-    {
+      msg: "Our quiz contains both subjective and objective MCQs. 'Subjective' questions will ask for your opinion and 'Objective' questions will test your IQ."
+    });
+
+    $scope.history.push({
       name: "QuizBot",
-      msg: "This quiz contains 34 subjective and objective MCQ questions. Subjective questions will ask for your opinion and objective questions will test your IQ. To get started, enter 'GO'."
-    }
-  ];
+      msg: "I can help you answer the questions in many ways. First, let's start with an example question for training purposes. Type 'TRAIN' when you are ready to start."
+    });
+  }, 1000);
 
   $("input[type='range']").change(function() {
     $scope.sliderChanged = true;
     $("#submit-button").css("display", "block");
     $("#output").css("color", "green");
+
+    if ($scope.question.questionNumber < 0) {
+      $scope.history.push({
+        name: "QuizBot",
+        msg: "Now click on the 'Submit' button to submit your initial answer and see feedback from others who attempted the quiz."
+      });
+    }
+
   });
 
   //Setting the question one
@@ -76,7 +91,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     url: api + '/question',
     data: {
       set: $scope.questionSet,
-      id: 0
+      id: -2
     },
     type: JSON,
   }).then(function(response) {
@@ -93,7 +108,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   //Confirmation message before reload and back
   $window.onbeforeunload = function(e) {
-    if ($scope.onbeforeunloadEnabled){
+    if ($scope.onbeforeunloadEnabled) {
       var dialogText = 'You have unsaved changes. Are you sure you want to leave the site?';
       e.returnValue = dialogText;
       return dialogText;
@@ -109,18 +124,32 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   //Show only when the answer is selected
   $scope.clicked = function() {
-    $("#confidence-container").css("display", "block");
-    $scope.history.push({
-      name: "QuizBot",
-      msg: "Move the slider to show how sure you are of the selected answer. Click on submit when done!"
-    });
+
+    //Resetting the red line
+    if ($scope.question.questionNumber < 0) {
+      $("#qBox").css("border", "none");
+      $("#confidence-container").css("border", "solid red");
+
+      $("#confidence-container").css("display", "block");
+      $scope.history.push({
+        name: "QuizBot",
+        msg: "Next, move the slider to show how confident you are of the selected answer. Higher the confidence, higher the value selected should be."
+      });
+    } else {
+      $("#confidence-container").css("display", "block");
+      $scope.history.push({
+        name: "QuizBot",
+        msg: "Move the slider to show how confident you are of the selected answer. Click on submit when done!"
+      });
+    }
+
     $timeout(function() {
-      console.log("testing scrolladjust");
       $scope.scrollAdjust();
     }, 500);
   };
 
   $scope.submitAnswer = function() {
+
     if ($scope.sliderChanged) {
       //Remove the button
       $("#submit-button").css("display", "none");
@@ -324,8 +353,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       $window.location.href = './big-five.html';
-    }
-    else {
+    } else {
       $scope.userId = $window.sessionStorage.getItem('userId');
       var data = {
         set: $scope.questionSet,
@@ -381,6 +409,31 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     element.scrollTop = element.scrollHeight;
   };
 
+  $scope.train = function() {
+    $("#question-area").css("display", "inline");
+    $("#qBox").css("border", "solid red");
+
+    $scope.history.push({
+      name: "QuizBot",
+      msg: "Given above is an example question that could appear in the quiz. As your mentor I can help you understand the question, by explaining what certain words included in the question mean."
+    });
+
+    $timeout(function() {
+      $scope.scrollAdjust();
+    }, 500);
+
+    $timeout(function() {
+      $scope.history.push({
+        msg: "Now, type 'HELP' to understand the meaning of difficult words in this question."
+      });
+    }, 500);
+
+    $scope.userState = "trained"; //Started the training
+    $timeout(function() {
+      $scope.scrollAdjust();
+    }, 500);
+  };
+
   $scope.go = function() {
     $("#question-area").css("display", "inline");
     $scope.history.push({
@@ -427,25 +480,37 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     var word = handle.split(" ")[1];
     var words = $scope.question.words;
     for (var i = 0; i < words.length; i++) {
-      if (word == undefined){
+      if (word == undefined) {
         $scope.history.push({
           name: "QuizBot",
           msg: "I am sorry. Seems like you did not enter a word. Type 'EXPLAIN' and the word to find the meaning. e.g. EXPLAIN " + words[0].key
         });
-      }
-       else if (word.toLowerCase() == words[i].key) {
+      } else if (word.toLowerCase() == words[i].key) {
         $scope.history.push({
           name: "QuizBot",
           msg: words[i].key + " => " + words[i].explaination
         });
+
+        //If in training
+        if ($scope.question.questionNumber < 0) {
+          $scope.history.push({
+            name: "QuizBot",
+            msg: "Now you can better understand the difficult words in the question and select the most appropriate answer."
+          });
+          $timeout(function() {
+            $scope.scrollAdjust();
+          }, 500);
+        }
+
       } else {
         $scope.history.push({
           name: "QuizBot",
           msg: "I am sorry. I can't provide an interpretation for the word you entered."
         });
-        $scope.help();
+        $scope.help(words);
       }
     }
+
     $scope.message = "";
   };
 
@@ -471,12 +536,12 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   // Execute a function when the user releases a key on the keyboard
   chatBox.addEventListener("keyup", function(event) {
-   // Cancel the default action, if needed
-   event.preventDefault();
-   // Number 13 is the "Enter" key on the keyboard
-   if (event.keyCode === 13) {
-     document.getElementById("sendButton").click();
-   }
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      document.getElementById("sendButton").click();
+    }
   });
 
   $scope.sendMessage = function() {
@@ -493,7 +558,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       var handle = $scope.message.toLowerCase();
 
       if (handle == 'go') {
-        if ($scope.userState == "ready") {
+        if ($scope.userState == "trained") {
           $scope.go();
         } else {
           $scope.history.push({
@@ -503,6 +568,16 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         }
         $scope.message = "";
 
+      } else if (handle == 'train') {
+        if ($scope.userState == "ready") {
+          $scope.train();
+        } else {
+          $scope.history.push({
+            name: "QuizBot",
+            msg: "You have already started the training."
+          });
+        }
+        $scope.message = "";
       } else if (handle == 'help') {
         $scope.userState = "help";
         $scope.help($scope.question.words);

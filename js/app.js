@@ -528,7 +528,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   //Chatbot function to start the quiz
-  $scope.userState = "ready";// Setting the inital stage
+  $scope.userState = "ready"; // Setting the inital stage
 
   //Function to adjust scrolling - not working
   $scope.scrollAdjust = function() {
@@ -603,8 +603,20 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.explain = function(handle) {
-    //Get the word
-    var word = handle.split(" ")[1];
+
+    var splitWords = handle.split(" ");
+    var word = "";
+
+    if (splitWords.length == 2) {
+      //Get the word
+      word = splitWords[1];
+    } else {
+      //For two word phrases
+      if (splitWords.length > 2) {
+        word = splitWords[1] + " " + splitWords[2];
+      }
+    }
+
     var words = $scope.question.words;
 
     //Check if a word was entered

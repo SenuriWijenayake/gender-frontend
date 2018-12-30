@@ -27,7 +27,8 @@ app.controller('HomeController', function($scope, $http, $window) {
   });
 
   $scope.submitDetails = function(user) {
-    if (user.questionSet && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
+    if (user.questionSet && user.nationality && user.proficiency && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
+      console.log(user);
       $http({
         method: 'POST',
         url: api + '/user',

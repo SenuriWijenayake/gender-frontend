@@ -28,7 +28,10 @@ app.controller('HomeController', function($scope, $http, $window) {
 
   $scope.submitDetails = function(user) {
     if (user.questionSet && user.nationality && user.proficiency && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
-      console.log(user);
+
+      $("#index-submit-button").attr('disabled', true);
+      $("#index-loader").css("display", "block");
+
       $http({
         method: 'POST',
         url: api + '/user',
@@ -64,12 +67,12 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   $timeout(function() {
     $scope.history.push({
       name: "QuizBot",
-      msg: "Our quiz contains both subjective and objective MCQs. 'Subjective' questions will ask for your opinion and 'Objective' questions will test your IQ."
+      msg: "Our quiz contains both subjective and objective Multiple Choice Questions (MCQs). 'Subjective' questions will ask for your opinion and 'Objective' questions will test your knowledge."
     });
 
     $scope.history.push({
       name: "QuizBot",
-      msg: "I can help you answer the questions in many ways. First, let's start with two example questions for training purposes. Type 'TRAIN' to start the training."
+      msg: "I can help you in answering the questions. First, let's start with two example questions for training purposes. Type 'TRAIN' to start the training."
     });
   }, 1000);
 
@@ -235,6 +238,9 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $scope.history.push({
           msg: "Option 2 : Keep the answer option unchanged and select new confidence level"
         });
+        $scope.history.push({
+          msg: "Option 3 : Make no changes and go ahead to the next question"
+        });
       }, 8000);
 
       $timeout(function() {
@@ -246,7 +252,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $("#change-section").css("display", "block");
         $scope.history.push({
           name: "QuizBot",
-          msg: "Would you like to change your answer? Click on 'YES' to make a change or 'NO' to go to the next question."
+          msg: "For training purposes, let's make a change to the answer. Click on 'YES' to make a change or 'NO' to go to the next question."
         });
       }, 12000);
 

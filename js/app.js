@@ -1,5 +1,6 @@
 var app = angular.module('app', []);
-var api = 'https://secret-hamlet-30641.herokuapp.com';
+// var api = 'https://secret-hamlet-30641.herokuapp.com';
+var api = 'http://localhost:5000';
 
 app.controller('BigFiveController', function($scope, $http, $window) {
   $http({
@@ -454,13 +455,13 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     $("#change-section").css("border", "none");
 
     //Handling the ending of the quiz and directing to the big five questionnaire
-    if (parseInt($scope.myAnswer.questionId) == 1) {
+    if (parseInt($scope.myAnswer.questionId) == 4) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       //Save chat messages to the database
       var data = {
         userId: $scope.userId,
-        chats: $scope.history
+        chats: JSON.parse(angular.toJson($scope.history))
       };
 
       $http({

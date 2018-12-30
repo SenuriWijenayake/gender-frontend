@@ -457,7 +457,23 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     if (parseInt($scope.myAnswer.questionId) == 5) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
-      $window.location.href = './big-five.html';
+      //Save chat messages to the database
+      var data = {
+        userId: $scope.userId,
+        chats: $scope.messages
+      };
+      $http({
+        method: 'POST',
+        url: api + '/saveChats',
+        data: data,
+        type: JSON,
+      }).then(function(response) {
+          console.log("Chat messages saved successfully.");
+          $window.location.href = './big-five.html';
+        },
+        function(error) {
+          console.log("Error occured when saving the chat messages.");
+        });
     } else {
       $scope.userId = $window.sessionStorage.getItem('userId');
       var data = {

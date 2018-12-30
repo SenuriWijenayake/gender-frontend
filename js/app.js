@@ -454,14 +454,15 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     $("#change-section").css("border", "none");
 
     //Handling the ending of the quiz and directing to the big five questionnaire
-    if (parseInt($scope.myAnswer.questionId) == 5) {
+    if (parseInt($scope.myAnswer.questionId) == 1) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       //Save chat messages to the database
       var data = {
         userId: $scope.userId,
-        chats: $scope.messages
+        chats: $scope.history
       };
+
       $http({
         method: 'POST',
         url: api + '/saveChats',

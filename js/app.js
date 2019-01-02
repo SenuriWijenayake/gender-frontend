@@ -13,7 +13,6 @@ app.controller('BigFiveController', function($scope, $http, $window) {
     console.log("Error occured when loading the big five questions");
   });
 
-
 });
 
 app.controller('HomeController', function($scope, $http, $window) {

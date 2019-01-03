@@ -27,7 +27,7 @@ app.controller('HomeController', function($scope, $http, $window) {
   });
 
   $scope.submitDetails = function(user) {
-    if (user.questionSet && user.nationality && user.proficiency && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
+    if (user.questionSet && user.nationality && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
 
       $("#index-submit-button").attr('disabled', true);
       $("#index-loader").css("display", "block");
@@ -454,7 +454,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     $("#change-section").css("border", "none");
 
     //Handling the ending of the quiz and directing to the big five questionnaire
-    if (parseInt($scope.myAnswer.questionId) == 4) {
+    if (parseInt($scope.myAnswer.questionId) == 33) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       //Save chat messages to the database

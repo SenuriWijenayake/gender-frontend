@@ -27,7 +27,10 @@ app.controller('HomeController', function($scope, $http, $window) {
   });
 
   $scope.submitDetails = function(user) {
-    if (user.questionSet && user.nationality && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
+    //Change the mode here to determine the group as control, avatar or names
+    user.mode = "control";
+
+    if (user.mode && user.questionSet && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
 
       $("#index-submit-button").attr('disabled', true);
       $("#index-loader").css("display", "block");
@@ -39,6 +42,7 @@ app.controller('HomeController', function($scope, $http, $window) {
         type: JSON,
       }).then(function(response) {
         $window.sessionStorage.setItem('userId', response.data);
+        $window.sessionStorage.setItem('mode', user.mode);
         $window.sessionStorage.setItem('questionSet', user.questionSet);
         $window.location.href = './quiz.html';
       }, function(error) {

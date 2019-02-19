@@ -56,10 +56,12 @@ app.controller('HomeController', function($scope, $http, $window) {
 app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   $scope.userId = $window.sessionStorage.getItem('userId');
+  $scope.mode = $window.sessionStorage.getItem('mode');
   $scope.questionSet = $window.sessionStorage.getItem('questionSet');
+
   $scope.question = {};
   $scope.sliderChanged = false;
-  $scope.onbeforeunloadEnabled = true;
+  $scope.onbeforeunloadEnabled = false;
   $scope.count = 0;
 
   //Chatbot related variables
@@ -69,10 +71,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   }];
 
   $timeout(function() {
-    $scope.history.push({
-      name: "QuizBot",
-      msg: "Our quiz contains both subjective and objective Multiple Choice Questions (MCQs). 'Subjective' questions will ask for your opinion and 'Objective' questions will test your knowledge."
-    });
 
     $scope.history.push({
       name: "QuizBot",
@@ -114,6 +112,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     url: api + '/question',
     data: {
       set: $scope.questionSet,
+      mode: $scope.mode,
       id: -2
     },
     type: JSON,
@@ -143,6 +142,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   $scope.myAnswer = {};
   $scope.myAnswer.confidence = 50;
   $scope.myAnswer.userId = $scope.userId;
+  $scope.myAnswer.mode = $scope.mode;
   $scope.myAnswer.questionSet = $scope.questionSet;
 
   //Show only when the answer is selected
@@ -186,11 +186,12 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       $scope.myAnswer.answerId = parseInt($scope.myAnswer.answerId);
       $scope.myAnswer.questionId = $scope.question.questionNumber;
       $scope.myAnswer.userId = $scope.userId;
+      $scope.myAnswer.mode = $scope.mode;
       $scope.myAnswer.questionSet = $scope.questionSet;
 
       $http({
         method: 'POST',
-        url: api + '/chartData',
+        url: api + '/feedback',
         data: $scope.myAnswer,
         type: JSON,
       }).then(function(response) {

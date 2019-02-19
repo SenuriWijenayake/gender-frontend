@@ -74,7 +74,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
     $scope.history.push({
       name: "QuizBot",
-      msg: "I can help you in answering the questions. First, let's start with two example questions for training purposes. Type 'TRAIN' to start the training."
+      msg: "I can help you answer the questions. First, let's start with an example questions for training purposes. Type 'TRAIN' to start the training."
     });
   }, 1000);
 
@@ -113,7 +113,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     data: {
       set: $scope.questionSet,
       mode: $scope.mode,
-      id: -2
+      id: -1
     },
     type: JSON,
   }).then(function(response) {
@@ -509,27 +509,16 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
           $scope.userState = "trained";
           $scope.history.push({
             name: "QuizBot",
-            msg: "The training is complete! You may now attempt the quiz. The quiz contains 34 objective and subjective MCQs. To start the quiz type 'GO'. Do NOT refresh the page or go back during the quiz."
+            msg: "The training is complete! You may now attempt the quiz. The quiz contains 39 multiple-choice questions. To start the quiz type 'GO'. Do NOT refresh the page or go back during the quiz."
           });
 
-          $timeout(function() {
-            $scope.scrollAdjust();
-          }, 500);
-        } else if ($scope.question.questionNumber == -1) {
-          $scope.history.push({
-            name: "QuizBot",
-            msg: "Now, let's look at a 'Subjective' question which asks for your opinion on a statement. You may select an answer based on whether you agree or disagree with the given statement."
-          });
-          $scope.history.push({
-            msg: "Type 'HELP' to understand the meaning of difficult words in this question."
-          });
           $timeout(function() {
             $scope.scrollAdjust();
           }, 500);
         } else {
           $scope.history.push({
             name: "QuizBot",
-            msg: "Moving to the next question (" + ($scope.question.questionNumber + 1).toString() + "/34). If you need my help with words type 'HELP'."
+            msg: "Moving to the next question (" + ($scope.question.questionNumber + 1).toString() + "/39). If you need my help with words type 'HELP'."
           });
           $timeout(function() {
             $scope.scrollAdjust();
@@ -572,7 +561,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
     $scope.history.push({
       name: "QuizBot",
-      msg: "Given above is an example  of an 'Objective' question that could appear in the quiz. As your mentor I can help you understand the question, by explaining what certain words included in the question mean."
+      msg: "Given above is an example question that could appear in the quiz. As your mentor I can help you understand the question, by explaining what certain words included in the question mean."
     });
 
     $timeout(function() {

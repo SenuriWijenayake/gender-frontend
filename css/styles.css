@@ -2,9 +2,8 @@
   width: 125px;
   height: 75px;
   text-align: center;
-  font-size: 2vw;
-  padding: 0px;
-  display: flex;
+  font-size: medium;
+  padding: 25px 0;
 }
 
 .avatar-box{

@@ -169,7 +169,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.submitAnswer = function() {
-
+    console.log("Inside submit");
     if ($scope.sliderChanged) {
       //Remove the button
       $("#submit-button").css("display", "none");
@@ -197,7 +197,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
           if ($scope.myAnswer.mode == "control"){
             $scope.createChart(response.data);
           } else if ($scope.myAnswer.mode == "avatar"){
-            console.log(response.data);
             $scope.avatarFeedback(response.data);
           } else {
             console.log("Here");
@@ -548,6 +547,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $("#loader").css("display", "none");
         $("#loader-text").css("display", "none");
         $("#chart_div").css("display", "none");
+        $("#avatar_div").css("display", "none");
         $("#change-section").css("display", "none");
         $("#submit-button").prop("disabled", false);
         $("#output").val("Not Specified");

@@ -21,7 +21,7 @@
   <div ng-app="app" ng-controller="HomeController">
     <div class="container">
       <div class="row" style="text-align:center;">
-        <div>
+        <div style="margin-bottom: 20px;">
           Welcome to Quiz Master! Thank you for agreeing to participate in this study. <br>
           To get started, enter your details in the form given below. <br>
           All fields are required (marked in <span style="color:red;">*</span>).
@@ -31,6 +31,36 @@
         <div class="question-container">
           <form>
             <table style="width:100%;">
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Mode: (to be selected by the researcher) <span style="color:red;">*</span></td>
+                <td class="col-sm-6" style="padding-top: 10px;">
+                  <select required ng-model="user.mode" class="input-text">
+                    <option value="">None</option>
+                    <option value="control">C</option>
+                    <option value="name">N</option>
+                    <option value="avatar">A</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr class="row">
+                <td class="col-sm-6 right padding-adjust-labels"> Question Set: (to be selected by the researcher) <span style="color:red;">*</span></td>
+                <td class="col-sm-6" style="padding-top: 10px;">
+                  <select required ng-model="user.questionSet" class="input-text">
+                    <option value="">None</option>
+                    <option value="1">Set 1</option>
+                    <option value="2">Set 2</option>
+                    <option value="3">Set 3</option>
+                  </select>
+                </td>
+              </tr>
+
+              <!--For name conditions-->
+              <tr class="row" ng-show="user.mode == 'name'">
+                <td class="col-sm-6 right padding-adjust-labels" style="padding-top:25px;"> Your name: <span style="color:red;">*</span></td>
+                <td class="col-sm-6" style="padding-top: 25px;"> <input type="text" placeholder=" e.g. Amy" ng-model="user.name" class="input-text"></td>
+              </tr>
 
               <tr class="row">
                 <td class="col-sm-6 right padding-adjust-labels"> Gender: <span style="color:red;">*</span> </td>
@@ -55,6 +85,26 @@
                 <td class="col-sm-6">
                   <input type="radio" id="gender-specified" name="user.gender" ng-model="user.gender" value="specified" class="radio-button"> <label for="gender-specified" class="specify-label"> Prefer to specify: </label>
                   <input type="text" id="gender-text" ng-model="user.genderSpecified" class="specify-text" ng-required="user.gender == specified ? true : false">
+                </td>
+              </tr>
+
+              <!--For female avatar conditions-->
+              <tr class="row" ng-show="user.mode == 'avatar' && user.gender == 'female'">
+                <td class="col-sm-6 right padding-adjust-labels"> Click on an avatar to select: <span style="color:red;">*</span></td>
+                <td class="col-sm-6 padding-adjust-radio" style="text-align: left;">
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="female-1" id="female-1" class="input-hidden col-sm-2" /> <label for="female-1"><img src="./assets/female-1.png" style="margin-right: 15px;"/></label>
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="female-2" id="female-2" class="input-hidden col-sm-2" /> <label for="female-2"><img src="./assets/female-2.png" style="margin-right: 15px;"/></label>
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="female-3" id="female-3" class="input-hidden col-sm-2" /> <label for="female-3"><img src="./assets/female-3.png" style="margin-right: 15px;"/></label>
+                </td>
+              </tr>
+
+              <!--For male avatar conditions-->
+              <tr class="row" ng-show="user.mode == 'avatar' && user.gender == 'male'">
+                <td class="col-sm-6 right padding-adjust-labels"> Click on an avatar to select: <span style="color:red;">*</span></td>
+                <td class="col-sm-6 padding-adjust-radio" style="text-align: left;">
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="male-1" id="male-1" class="input-hidden col-sm-2" /> <label for="male-1"><img src="./assets/male-1.png" style="margin-right: 15px;"/></label>
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="male-2" id="male-2" class="input-hidden col-sm-2" /> <label for="male-2"><img src="./assets/male-2.png" style="margin-right: 15px;"/></label>
+                  <input type="radio" name="user.avatar" ng-model="user.avatar" value="male-3" id="male-3" class="input-hidden col-sm-2" /> <label for="male-3"><img src="./assets/male-3.png" style="margin-right: 15px;"/></label>
                 </td>
               </tr>
 
@@ -361,19 +411,6 @@
               <tr class="row">
                 <td class="col-sm-6 right padding-adjust-labels"> Field of Study: <span style="color:red;">*</span></td>
                 <td class="col-sm-6" style="padding-top: 10px;"> <input type="text" placeholder=" e.g. Computer Science" ng-model="user.field" class="input-text" required></td>
-              </tr>
-
-              <tr class="row">
-                <td class="col-sm-6 right padding-adjust-labels"> Question Set: <span style="color:red;">*</span> </td>
-                <td class="col-sm-6 padding-adjust-radio"> <input type="radio" name="user.questionSet" ng-model="user.questionSet" value="1" class="radio-button" id="set-1" required> <label for="set-1" class="gender-label"> Set 1 </label></td>
-              </tr>
-              <tr class="row">
-                <td class="col-sm-6 right"></td>
-                <td class="col-sm-6"> <input type="radio" name="user.questionSet" ng-model="user.questionSet" value="2" class="radio-button" id="set-2"> <label for="set-2" class="gender-label"> Set 2 </label></td>
-              </tr>
-              <tr class="row">
-                <td class="col-sm-6 right"></td>
-                <td class="col-sm-6"> <input type="radio" name="user.questionSet" ng-model="user.questionSet" value="3" class="radio-button" id="set-3"> <label for="set-3" class="gender-label"> Set 3 </label></td>
               </tr>
 
             </table>

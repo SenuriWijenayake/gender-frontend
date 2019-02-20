@@ -27,10 +27,9 @@ app.controller('HomeController', function($scope, $http, $window) {
   });
 
   $scope.submitDetails = function(user) {
-    //Change the mode here to determine the group as control, avatar or names
-    user.mode = "control";
+    console.log(user);
 
-    if (user.mode && user.questionSet && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true)) {
+    if (user.mode && user.questionSet && user.gender && user.age && user.education && user.field && (user.gender == 'specified' ? user.genderSpecified : true) && (user.mode == 'name' ? user.name : true) && (user.mode == 'avatar' ? user.avatar : true)) {
 
       $("#index-submit-button").attr('disabled', true);
       $("#index-loader").css("display", "block");

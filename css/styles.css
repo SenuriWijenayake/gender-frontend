@@ -1,3 +1,20 @@
+.input-hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type=radio]:checked + label>img {
+  border: 1px solid #fff;
+  box-shadow: 0 0 3px 3px #090;
+}
+
+/* Stuff after this is only to make things more pretty */
+input[type=radio] + label>img {
+  border: 1px dashed #444;
+  height: 100px;
+  transition: 500ms all;
+}
+
 .align-td {
   margin-left: 45% ! important;
 }

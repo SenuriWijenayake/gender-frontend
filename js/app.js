@@ -194,7 +194,14 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       }).then(function(response) {
         $scope.myAnswer.answerId = $scope.myAnswer.answerId.toString();
         $timeout(function() {
-          $scope.createChart(response.data);
+          if ($scope.myAnswer.mode == "control"){
+            $scope.createChart(response.data);
+          } else if ($scope.myAnswer.mode == "avatar"){
+            console.log(response.data);
+            $scope.avatarFeedback(response.data);
+          } else {
+            console.log("Here");
+          }
           $scope.showSummary(response.data.description);
         }, 3000);
 
@@ -202,6 +209,16 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         console.log("Error occured when loading the chart");
       });
     }
+  };
+
+  $scope.avatarFeedback = function(data){
+    $scope.feedback = data;
+
+    $("#loader").css("display", "none");
+    $("#loader-text").css("display", "none");
+
+    $("#avatar_div").css("display", "block");
+    $("#change-section").css("display", "block");
   };
 
   $scope.showSummary = function(summary) {

@@ -1,15 +1,29 @@
+.option-box {
+  width: 100px;
+  height: 75px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 28px;
+}
+
+.avatar-box{
+  width: 75px;
+  height:75px;
+  margin-right: 3px;
+}
+
 .input-hidden {
   position: absolute;
   left: -9999px;
 }
 
-input[type=radio]:checked + label>img {
+input[type=radio]:checked+label>img {
   border: 1px solid #fff;
   box-shadow: 0 0 3px 3px #090;
 }
 
 /* Stuff after this is only to make things more pretty */
-input[type=radio] + label>img {
+input[type=radio]+label>img {
   border: 1px dashed #444;
   height: 100px;
   transition: 500ms all;

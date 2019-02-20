@@ -65,36 +65,50 @@
         <div id="loader" style="display: none;" class="loader"></div>
         <div id="loader-text" style="display: none;" class="loader-text">Loading results.. Please wait.</div>
       </div>
+
+      <div class="col-sm-6 avatardiv" id="avatar-area">
+        <div id="avatar_div" style="display:none;margin-left: 3%;margin-top:4%;">
+          <div style="font-weight:bold;margin-bottom:1%;">See how others have answered this question...</div>
+          <div class="row" ng-repeat="option in feedback">
+            <div class="col-sm-3 option-box">{{option.answer}}</div>
+            <div class="col-sm-9" style="padding-left:5px;padding-right:0px;">
+              <img ng-repeat="avatar in option.value" src="./assets/{{avatar.src}}" class="avatar-box" />
+            </div>
+          </div>
+          <div id="loader" style="display: none;" class="loader"></div>
+          <div id="loader-text" style="display: none;" class="loader-text">Loading results.. Please wait.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="change-section" class="col-sm-6" style="margin-bottom:50px;display:none;float:left;margin-left:25px;padding:20px;">
+          <div id="descr">
+            <p class="change-text">Would you like to make any changes?</p>
+          </div>
+          <div class="col-sm-6">
+            <input type="button" value="Yes" class="yes-button" ng-click="yes()" />
+          </div>
+          <div class="col-sm-6">
+            <input type="button" value="No, next question" class="no-button" ng-click="next()" />
+          </div>
+        </div>
+        <div class="col-sm-6"></div>
+      </div>
+      <div class="chatarea col-sm-6" id="chat-area">
+        <div class="minimize">
+          <!-- <img onclick="alert()" src="../assets/minimize.png" width="25" height="21" style="float:right;border-left: grey solid 1px;"> -->
+        </div>
+        <div class="textarea" id="text-area">
+          <div ng-repeat="line in history" ng-class="{'last-line':$last}">
+            <b ng-if='line.name'> {{line.name}} : </b> {{line.msg}}
+          </div>
+        </div>
+        <div class="inputarea">
+          <input type="text" ng-model="message" id="chat-text" placeholder="Type your message here.." class="text-box">
+          <button id="sendButton" ng-click="sendMessage()" style="width: 13%;">Send</button>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <div id="change-section" class="col-sm-6" style="margin-bottom:50px;display:none;float:left;margin-left:25px;padding:20px;">
-        <div id="descr">
-          <p class="change-text">Would you like to make any changes?</p>
-        </div>
-        <div class="col-sm-6">
-          <input type="button" value="Yes" class="yes-button" ng-click="yes()" />
-        </div>
-        <div class="col-sm-6">
-          <input type="button" value="No, next question" class="no-button" ng-click="next()" />
-        </div>
-      </div>
-      <div class="col-sm-6"></div>
-    </div>
-    <div class="chatarea col-sm-6" id="chat-area">
-      <div class="minimize">
-        <!-- <img onclick="alert()" src="../assets/minimize.png" width="25" height="21" style="float:right;border-left: grey solid 1px;"> -->
-      </div>
-      <div class="textarea" id="text-area">
-        <div ng-repeat="line in history" ng-class="{'last-line':$last}">
-          <b ng-if='line.name'> {{line.name}} : </b> {{line.msg}}
-        </div>
-      </div>
-      <div class="inputarea">
-        <input type="text" ng-model="message" id="chat-text" placeholder="Type your message here.." class="text-box">
-        <button id="sendButton" ng-click="sendMessage()" style="width: 13%;">Send</button>
-      </div>
-    </div>
-  </div>
 </body>
 
 </html>

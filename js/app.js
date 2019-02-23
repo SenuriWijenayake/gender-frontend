@@ -71,7 +71,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
     $scope.history.push({
       name: "QuizBot",
-      msg: "I can help you answer the questions. First, let's start with an example questions for training purposes. Type 'TRAIN' to start the training."
+      msg: "I can help you answer the questions. First, let's start with an example question for training purposes. Type 'TRAIN' to start the training."
     });
   }, 1000);
 
@@ -194,9 +194,9 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       }).then(function(response) {
         $scope.myAnswer.answerId = $scope.myAnswer.answerId.toString();
         $timeout(function() {
-          if ($scope.myAnswer.mode == "control"){
+          if ($scope.myAnswer.mode == "control") {
             $scope.createChart(response.data);
-          } else if ($scope.myAnswer.mode == "avatar"){
+          } else if ($scope.myAnswer.mode == "avatar") {
             $scope.avatarFeedback(response.data);
           } else {
             console.log("Here");
@@ -210,14 +210,15 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     }
   };
 
-  $scope.avatarFeedback = function(data){
-    $scope.feedback = data;
+  $scope.avatarFeedback = function(data) {
+    $scope.feedback = data.answers;
 
     $("#loader").css("display", "none");
     $("#loader-text").css("display", "none");
 
     $("#avatar_div").css("display", "block");
     $("#change-section").css("display", "block");
+
   };
 
   $scope.showSummary = function(summary) {
@@ -226,12 +227,29 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       $("#confidence-container").css("border", "none");
       $("#change-section").css("display", "none");
 
-      $timeout(function() {
-        $scope.history.push({
-          name: "QuizBot",
-          msg: "The chart given above demonstrates how other participants attempted the same question. The votes given for each answer option is shown as a percentage of the total votes."
-        });
-      }, 500);
+      if ($scope.myAnswer.mode == "control"){
+        $timeout(function() {
+          $scope.history.push({
+            name: "QuizBot",
+            msg: "The chart given above demonstrates how other participants attempted the same question. Each square represents one participant (out of a total 7) who selected the corresponding answer option."
+          });
+        }, 500);
+      } else if ($scope.myAnswer.mode == "avatar"){
+        $timeout(function() {
+          $scope.history.push({
+            name: "QuizBot",
+            msg: "The chart given above demonstrates how other participants attempted the same question. Each avatar represents a participant (out of a total 7) who selected the corresponding answer option."
+          });
+        }, 500);
+      } else {
+        $timeout(function() {
+          $scope.history.push({
+            name: "QuizBot",
+            msg: "The chart given above demonstrates how other participants attempted the same question. Each name represents a participant (out of a total 7) who selected the corresponding answer option."
+          });
+        }, 500);
+      }
+
 
       $timeout(function() {
         $scope.scrollAdjust();
@@ -280,10 +298,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
     } else {
       $scope.history.push(summary);
-      $scope.history.push({
-        name: "QuizBot",
-        msg: "Would you like to change your answer? Click on 'YES' to make a change or 'NO' to go to the next question."
-      });
       $timeout(function() {
         $scope.scrollAdjust();
       }, 500);
@@ -581,16 +595,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
           msg: words[index].key + " => " + words[index].explaination
         });
 
-        //If in training
-        if ($scope.question.questionNumber < 0) {
-          $scope.history.push({
-            name: "QuizBot",
-            msg: "Now you can better understand the difficult words in the question and select the most appropriate answer."
-          });
-          $timeout(function() {
-            $scope.scrollAdjust();
-          }, 500);
-        }
       } else {
         $scope.history.push({
           name: "QuizBot",

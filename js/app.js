@@ -169,7 +169,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.submitAnswer = function() {
-    console.log("Inside submit");
+
     if ($scope.sliderChanged) {
       //Remove the button
       $("#submit-button").css("display", "none");
@@ -292,98 +292,13 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   };
 
   $scope.createChart = function(chartData) {
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {
-      'packages': ['corechart']
-    });
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
-
+    $scope.controlFeedback = chartData.answers;
     $("#loader").css("display", "none");
     $("#loader-text").css("display", "none");
 
     $("#chart_div").css("display", "block");
     $("#change-section").css("display", "block");
 
-    function drawChart() {
-      // Create the data table.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Answer');
-      data.addColumn('number', 'Votes (%)');
-      data.addColumn({
-        type: 'string',
-        role: 'annotation'
-      });
-
-      data.addRows([
-        [chartData.answers[0].answer.toString(), chartData.answers[0].value, chartData.answers[0].value.toString() + ' %'],
-        [chartData.answers[1].answer.toString(), chartData.answers[1].value, chartData.answers[1].value.toString() + ' %'],
-        [chartData.answers[2].answer.toString(), chartData.answers[2].value, chartData.answers[2].value.toString() + ' %'],
-        [chartData.answers[3].answer.toString(), chartData.answers[3].value, chartData.answers[3].value.toString() + ' %']
-      ]);
-
-      // Set chart options
-      var options = {
-        'width': 500,
-        'height': 370,
-        'title': "See how others have answered this question..",
-        'titleTextStyle': {
-          fontSize: 16
-        },
-        'hAxis': {
-          'title': 'Selected answer'
-        },
-        'vAxis': {
-          'title': '% of votes by others',
-          'ticks': [{
-              v: 0,
-              f: '0%'
-            }, {
-              v: 10,
-              f: '10%'
-            }, {
-              v: 20,
-              f: '20%'
-            }, {
-              v: 30,
-              f: '30%'
-            },
-            {
-              v: 40,
-              f: '40%'
-            },
-            {
-              v: 50,
-              f: '50%'
-            },
-            {
-              v: 60,
-              f: '60%'
-            },
-            {
-              v: 70,
-              f: '70%'
-            },
-            {
-              v: 80,
-              f: '80%'
-            },
-            {
-              v: 90,
-              f: '90%'
-            },
-            {
-              v: 100,
-              f: '100%'
-            }
-          ]
-        }
-      };
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
   };
 
   $scope.yes = function() {

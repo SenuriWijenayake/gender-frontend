@@ -191,9 +191,9 @@ input[type=radio]+label>img {
   margin-right: auto;
 }
 
-.chartdiv {
+/* .chartdiv {
   margin-left: -68px;
-}
+} */
 
 .visible-image {
   display: inline;
@@ -206,7 +206,7 @@ input[type=radio]+label>img {
 .loader-text {
   text-align: center;
   margin-top: 10px;
-  margin-left: 33%;
+  /* margin-left: 33%; */
 }
 
 .index-loader-text {
@@ -403,7 +403,8 @@ body {
   -webkit-animation: spin 2s linear infinite;
   /* Safari */
   animation: spin 2s linear infinite;
-  margin-left: 57%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 16%;
 }
 

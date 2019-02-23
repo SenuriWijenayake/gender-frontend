@@ -61,9 +61,19 @@
       </div>
 
       <div class="col-sm-6 chartdiv" id="chart-area">
-        <div id="chart_div" style="display: none;margin-left: 24%;"></div>
+        <div id="chart_div" style="display:none;margin-left: 3%;margin-top:3%;">
+          <div style="font-weight:bold;margin-bottom:1%;">See how others have answered this question...</div>
+          <div class="row option-row" ng-repeat="option in controlFeedback">
+            <div class="col-sm-3 option-box">{{option.answer}}</div>
+            <div class="col-sm-9" style="padding-left:10px;padding-right:0px;">
+              <img ng-repeat="block in option.value" src="./assets/{{block.src}}" class="avatar-box" />
+            </div>
+          </div>
+        </div>
+
         <div id="loader" style="display: none;" class="loader"></div>
         <div id="loader-text" style="display: none;" class="loader-text">Loading results.. Please wait.</div>
+
       </div>
 
       <div class="col-sm-6 avatardiv" id="avatar-area">
@@ -75,9 +85,9 @@
               <img ng-repeat="avatar in option.value" src="./assets/{{avatar.src}}" class="avatar-box" />
             </div>
           </div>
-          <div id="loader" style="display: none;" class="loader"></div>
-          <div id="loader-text" style="display: none;" class="loader-text">Loading results.. Please wait.</div>
         </div>
+        <div id="loader" style="display: none;" class="loader"></div>
+        <div id="loader-text" style="display: none;" class="loader-text">Loading results.. Please wait.</div>
       </div>
 
       <div class="row">

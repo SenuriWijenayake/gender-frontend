@@ -199,7 +199,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
           } else if ($scope.myAnswer.mode == "avatar") {
             $scope.avatarFeedback(response.data);
           } else {
-            console.log("Here");
+            $scope.namesFeedback(response.data);
           }
           $scope.showSummary(response.data.description);
         }, 3000);
@@ -208,6 +208,17 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         console.log("Error occured when loading the chart");
       });
     }
+  };
+
+  $scope.namesFeedback = function(data) {
+    $scope.feedback = data.answers;
+
+    $("#loader").css("display", "none");
+    $("#loader-text").css("display", "none");
+
+    $("#names_div").css("display", "block");
+    $("#change-section").css("display", "block");
+
   };
 
   $scope.avatarFeedback = function(data) {
@@ -227,14 +238,14 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       $("#confidence-container").css("border", "none");
       $("#change-section").css("display", "none");
 
-      if ($scope.myAnswer.mode == "control"){
+      if ($scope.myAnswer.mode == "control") {
         $timeout(function() {
           $scope.history.push({
             name: "QuizBot",
             msg: "The chart given above demonstrates how other participants attempted the same question. Each square represents one participant (out of a total 7) who selected the corresponding answer option."
           });
         }, 500);
-      } else if ($scope.myAnswer.mode == "avatar"){
+      } else if ($scope.myAnswer.mode == "avatar") {
         $timeout(function() {
           $scope.history.push({
             name: "QuizBot",
@@ -477,6 +488,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $("#loader-text").css("display", "none");
         $("#chart_div").css("display", "none");
         $("#avatar_div").css("display", "none");
+        $("#names_div").css("display", "none");
         $("#change-section").css("display", "none");
         $("#submit-button").prop("disabled", false);
         $("#output").val("Not Specified");

@@ -38,9 +38,10 @@ app.controller('HomeController', function($scope, $http, $window) {
         data: user,
         type: JSON,
       }).then(function(response) {
-        $window.sessionStorage.setItem('userId', response.data);
+        $window.sessionStorage.setItem('userId', response.data.id);
         $window.sessionStorage.setItem('mode', user.mode);
         $window.sessionStorage.setItem('questionSet', user.questionSet);
+        $window.sessionStorage.setItem('order', JSON.stringify(response.data.order));
         $window.location.href = './quiz.html';
       }, function(error) {
         console.log("Error occured when submitting user details");
@@ -52,9 +53,12 @@ app.controller('HomeController', function($scope, $http, $window) {
 
 app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
+   $scope.currentQIndex = 0;
+
   $scope.userId = $window.sessionStorage.getItem('userId');
   $scope.mode = $window.sessionStorage.getItem('mode');
   $scope.questionSet = $window.sessionStorage.getItem('questionSet');
+  $scope.order = JSON.parse($window.sessionStorage.getItem('order'));
 
   $scope.question = {};
   $scope.sliderChanged = false;
@@ -110,10 +114,11 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     data: {
       set: $scope.questionSet,
       mode: $scope.mode,
-      id: -1
+      id: $scope.order[$scope.currentQIndex]
     },
     type: JSON,
   }).then(function(response) {
+    $scope.currentQIndex += 1;
     $scope.question = response.data;
     if ($scope.question.img) {
       $("#image-container").css("display", "inline");
@@ -412,7 +417,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     $("#change-section").css("border", "none");
 
     //Handling the ending of the quiz and directing to the big five questionnaire
-    if (parseInt($scope.myAnswer.questionId) == 33) {
+    if ($scope.currentQIndex == 39) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       //Save chat messages to the database
@@ -437,7 +442,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       $scope.userId = $window.sessionStorage.getItem('userId');
       var data = {
         set: $scope.questionSet,
-        id: parseInt($scope.myAnswer.questionId) + 1
+        id: $scope.order[$scope.currentQIndex]
       };
 
       $http({
@@ -446,6 +451,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         data: data,
         type: JSON,
       }).then(function(response) {
+
+        $scope.currentQIndex += 1;
 
         //Display the new question area and chart area
         $("#question-area").css("display", "block");

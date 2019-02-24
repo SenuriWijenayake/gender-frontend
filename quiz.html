@@ -94,7 +94,7 @@
           <div class="row option-row" ng-repeat="option in feedback">
             <div class="col-sm-3 option-box">{{option.answer}}</div>
             <div class="col-sm-9" style="padding-left:10px;padding-right:0px;">
-              <label ng-repeat="name in option.value" class="avatar-box">{{name.src}}</label>
+              <img ng-repeat="name in option.value" src="./assets/name-tags/{{name.src}}" class="avatar-box" />
             </div>
           </div>
         </div>

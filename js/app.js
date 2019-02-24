@@ -62,7 +62,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
   $scope.question = {};
   $scope.sliderChanged = false;
-  $scope.onbeforeunloadEnabled = false;
+  $scope.onbeforeunloadEnabled = true;
   $scope.count = 0;
 
   //Chatbot related variables

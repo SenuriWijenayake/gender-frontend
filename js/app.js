@@ -53,7 +53,7 @@ app.controller('HomeController', function($scope, $http, $window) {
 
 app.controller('QuizController', function($scope, $http, $window, $timeout) {
 
-   $scope.currentQIndex = 0;
+  $scope.currentQIndex = 0;
 
   $scope.userId = $window.sessionStorage.getItem('userId');
   $scope.mode = $window.sessionStorage.getItem('mode');
@@ -108,6 +108,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
   });
 
   //Setting the question one
+  console.log($scope.currentQIndex);
+
   $http({
     method: 'POST',
     url: api + '/question',
@@ -265,7 +267,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
           });
         }, 500);
       }
-
 
       $timeout(function() {
         $scope.scrollAdjust();
@@ -444,6 +445,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         set: $scope.questionSet,
         id: $scope.order[$scope.currentQIndex]
       };
+      console.log($scope.currentQIndex);
 
       $http({
         method: 'POST',
@@ -478,7 +480,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         } else {
           $scope.history.push({
             name: "QuizBot",
-            msg: "Moving to the next question (" + ($scope.question.questionNumber + 1).toString() + "/39). If you need my help with words type 'HELP'."
+            msg: "Moving to the next question (" + ($scope.currentQIndex - 1).toString() + "/39). If you need my help with words type 'HELP'."
           });
           $timeout(function() {
             $scope.scrollAdjust();

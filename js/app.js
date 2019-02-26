@@ -454,8 +454,6 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         type: JSON,
       }).then(function(response) {
 
-        $scope.currentQIndex += 1;
-
         //Display the new question area and chart area
         $("#question-area").css("display", "block");
         $("#chart-area").css("display", "block");
@@ -466,7 +464,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $scope.myAnswer.confidence = 50;
         $scope.question = response.data;
 
-        if ($scope.question.questionNumber == 0) {
+        if ($scope.currentQIndex == 1) {
           $("#question-area").css("display", "none");
           $scope.userState = "trained";
           $scope.history.push({
@@ -480,7 +478,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         } else {
           $scope.history.push({
             name: "QuizBot",
-            msg: "Moving to the next question (" + ($scope.currentQIndex - 1).toString() + "/39). If you need my help with words type 'HELP'."
+            msg: "Moving to the next question (" + $scope.currentQIndex.toString() + "/39). If you need my help with words type 'HELP'."
           });
           $timeout(function() {
             $scope.scrollAdjust();
@@ -502,6 +500,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         $("#submit-button").prop("disabled", false);
         $("#output").val("Not Specified");
         $("#output").css("color", "red");
+
+        $scope.currentQIndex += 1;
 
       }, function(error) {
         console.log("Error occured when loading the question");

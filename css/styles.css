@@ -1,3 +1,17 @@
+.name-row{
+  padding-left: 10px;
+  padding-right: 0px;
+  padding-top: 20px;
+  height: 75px;
+}
+
+.name-box{
+  width: 70px;
+  margin-right: 7px;
+  font-size: 22px;
+  text-align: center;
+}
+
 .cbox{
   width: 70px;
   height:70px;

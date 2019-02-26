@@ -26,7 +26,7 @@
             <div class="row">
               <p class="question-text"> <span ng-if="question.questionNumber >= 0"> Q{{currentQIndex - 1}}. </span>{{question.questionText}}</p>
               <div id="image-container" style="margin-bottom: 15px;">
-                <img ng-if='question.img' src="{{question.img}}" style="width:237px; height:125px;">
+                <img ng-if='question.img' src="{{question.img}}" style="width:220px; height:125px;">
               </div>
             </div>
 
@@ -93,8 +93,9 @@
           <div style="font-weight:bold;margin-bottom:1%;">See how others have answered this question...</div>
           <div class="row option-row" ng-repeat="option in feedback">
             <div class="col-sm-3 option-box">{{option.answer}}</div>
-            <div class="col-sm-9" style="padding-left:10px;padding-right:0px;">
-              <img ng-repeat="name in option.value" src="./assets/name-tags/{{name.src}}" class="avatar-box" />
+            <div class="col-sm-9 name-row">
+              <label ng-repeat="name in option.value" class="name-box">{{name.src}}</label>
+              <!-- <img ng-repeat="name in option.value" src="./assets/name-tags/{{name.src}}" class="name-box" /> -->
             </div>
           </div>
         </div>

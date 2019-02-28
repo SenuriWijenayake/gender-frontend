@@ -418,7 +418,7 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     $("#change-section").css("border", "none");
 
     //Handling the ending of the quiz and directing to the big five questionnaire
-    if ($scope.currentQIndex == 39) {
+    if ($scope.currentQIndex == 40) {
       //Disable the confirmation message
       $scope.onbeforeunloadEnabled = false;
       //Save chat messages to the database

@@ -378,6 +378,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
       //Remove the question area and chart area
       $("#question-area").css("display", "none");
       $("#chart-area").css("display", "none");
+      $("#avatar-area").css("display", "none");
+      $("#names-area").css("display", "none");
       $("#change-section").css("display", "none");
 
       //Disable the button
@@ -406,6 +408,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
     //Remove the question area and chart area
     $("#question-area").css("display", "none");
     $("#chart-area").css("display", "none");
+    $("#avatar-area").css("display", "none");
+    $("#names-area").css("display", "none");
     $("#change-section").css("display", "none");
 
     $scope.count = 0;
@@ -457,6 +461,8 @@ app.controller('QuizController', function($scope, $http, $window, $timeout) {
         //Display the new question area and chart area
         $("#question-area").css("display", "block");
         $("#chart-area").css("display", "block");
+        $("#avatar-area").css("display", "block");
+        $("#names-area").css("display", "block");
         $("#change-section").css("display", "block");
 
         $scope.myAnswer = {};
